@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Infraestructure.Data
 {
-    public class Sale
+    internal class RepositoryBase
     {
     }
 }
