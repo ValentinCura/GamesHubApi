@@ -12,8 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< Updated upstream
     <ProjectReference Include="..\Aplication\Aplication.csproj" />
     <ProjectReference Include="..\Infraestructure\Infraestructure.csproj" />
+=======
+    <Folder Include="Controllers\" />
+>>>>>>> Stashed changes
   </ItemGroup>
 
 </Project>
