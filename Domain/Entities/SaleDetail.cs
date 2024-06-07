@@ -8,5 +8,9 @@ namespace Domain.Entities
 {
     public class SaleDetail
     {
+        public double Price { get; set; }   
+        public int Quantity { get; set; }   
+
+        public Product Product { get; set; }
     }
 }

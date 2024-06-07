@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Client
+    public class Client : User
     {
+        public ICollection<Sale> Buys { get; set; } = new List<Sale>();
     }
 }
