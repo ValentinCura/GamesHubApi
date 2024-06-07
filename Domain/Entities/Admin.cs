@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Admin
+    public class Admin : User
     {
+          
     }
 }
