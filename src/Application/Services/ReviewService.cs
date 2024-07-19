@@ -2,38 +2,47 @@
 using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Application.Services
 {
     public class ReviewService : IReviewService
     {
-        private readonly IProductRepository _productRepository;
+        
         private readonly IReviewRepository _reviewRepository;
-
-        public ReviewService(IProductRepository productRepository, IReviewRepository reviewRepository)
+        private readonly ISaleDetailRepository _saleDetailRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IClientRepository _clientRepository;
+        public ReviewService( IReviewRepository reviewRepository, ISaleDetailRepository saleDetailRepository, IProductRepository productRepository, IClientRepository clientRepository)
         {
-            _productRepository = productRepository;
             _reviewRepository = reviewRepository;
+            _saleDetailRepository = saleDetailRepository;
+            _productRepository = productRepository;
+            _clientRepository = clientRepository;
+
         }
-        public Review Add(ReviewForRequest reviewDto)
+        public Review Add(ReviewForRequest reviewDto, int clientId)
         {
-
-            var product = _productRepository.GetById(reviewDto.ProductId);
-                
-                    var Review = new Review()
-                    {
-                        Content = reviewDto.Content,
-                        Product = product
-                    };
-                return _reviewRepository.Add(Review);
-
-                
-           
+           var product = _productRepository.GetById(reviewDto.ProductId);
+           var client = _clientRepository.GetById(clientId);
+           var sale = _saleDetailRepository.CheckSale(clientId,reviewDto.ProductId);
+            if (sale != null)
+            {
+                var review = new Review()
+                {
+                    Content = reviewDto.Content,
+                    ProductId = reviewDto.ProductId,
+                    Product = product,
+                    ClientId = clientId,
+                    Client = client
+                };
+                return _reviewRepository.Add(review);
+            }
+            throw new Exception("No sale with client or product");
+        }
+        public Review GetById(int reviewId)
+        {
+            return _reviewRepository.GetById(reviewId);
         }
     }
 }

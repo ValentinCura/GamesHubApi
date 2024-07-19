@@ -13,18 +13,19 @@ namespace Application.Services
 {
     public class SaleService : ISaleService
     {
-        private readonly IProductRepository _productRepository;
         private readonly ISaleRepository _saleRepository;
 
         public SaleService(IProductRepository productRepository, ISaleRepository saleRepository)
         {
-            _productRepository = productRepository; 
             _saleRepository = saleRepository;
         }
         public Sale Add(Sale saleToAdd)
         { 
                 return _saleRepository.Add(saleToAdd);
         }
-            
+        public Sale GetById(int id)
+        {
+            return _saleRepository.GetById(id);
+        }
     }
 }

@@ -21,10 +21,11 @@ namespace Application.Services
         {
             var Client = new Client()
             {
+                Name = clientDto.Name,
+                LastName = clientDto.LastName,
                 Username = clientDto.Username,
                 Password = clientDto.Password,
-                Email = clientDto.Email,
-                Buys = []
+                Email = clientDto.Email
             };
             return _clientRepository.Add(Client);
         }
@@ -32,6 +33,20 @@ namespace Application.Services
         public Client? GetById(int id)
         {
             return _clientRepository.GetById(id);
+        }
+
+        public List<Client> Get()
+        {
+            return _clientRepository.Get();
+        }
+
+        public void Remove(int id)
+        {
+            var client = _clientRepository.GetById(id);
+            if (client is not null)
+            {
+                _clientRepository.Remove(client);
+            }
         }
 
 

@@ -41,9 +41,7 @@ namespace Application.Services
                 Description = productDto.Description,
                 Type = productDto.Type,
                 Price = productDto.Price,
-                Stock = productDto.Stock,
-                Console = productDto.Console,
-                Reviews = []
+                Console = productDto.Console
             };
             return _repository.Add(product);
         }
@@ -56,7 +54,6 @@ namespace Application.Services
                 product.Description = productDto.Description;
                 product.Type = productDto.Type;
                 product.Price = productDto.Price;
-                product.Stock = productDto.Stock;
                 product.Console = productDto.Console;
                 
                 _repository.Update(product);

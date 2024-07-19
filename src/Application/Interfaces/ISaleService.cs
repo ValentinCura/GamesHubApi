@@ -11,7 +11,7 @@ namespace Application.Interfaces
     public interface ISaleService
     {
         Sale Add(Sale saleToAdd);
-
+        Sale GetById(int id);
 
     }
 }

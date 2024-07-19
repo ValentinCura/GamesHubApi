@@ -15,7 +15,7 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public string Description { get; set; } 
 
@@ -23,10 +23,6 @@ namespace Domain.Entities
 
         public double Price { get; set; }   
 
-        public int Stock { get; set; } 
-
         public string Console {  get; set; }    
-
-        public ICollection<Review> Reviews { get; set; } = new List<Review>();  
     }
 }

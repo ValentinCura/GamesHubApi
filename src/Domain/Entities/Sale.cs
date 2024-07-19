@@ -17,10 +17,10 @@ namespace Domain.Entities
 
         [ForeignKey("ClientId")]
 
-        public Client? Client { get; set; }
         public int ClientId { get; set; }
-        
-        public ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
+        public Client? Client { get; set; }
+
+        //public ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
     }
 }
 

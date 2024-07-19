@@ -10,6 +10,7 @@ namespace Application.Interfaces
 {
     public interface IReviewService
     {
-        Review Add(ReviewForRequest reviewDto);
+        Review Add(ReviewForRequest reviewDto, int clientId);
+        Review GetById(int reviewId);
     }
 }

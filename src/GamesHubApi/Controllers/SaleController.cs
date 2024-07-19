@@ -2,13 +2,16 @@
 using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GamesHubApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SaleController : ControllerBase
     {
         private readonly ISaleService _saleService;
@@ -19,21 +22,32 @@ namespace GamesHubApi.Controllers
             _clientService = clientService;
         }
         [HttpPost]
-        public ActionResult<Sale> Add([FromBody] SaleForRequest saleDto)
+        public ActionResult<Sale> Add()
+
         {
-            if (saleDto == null)
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            
+            if (userId >= 1 || userRole != typeof(Client).Name)
             {
-                return BadRequest("Some fields are missing or invalid.");
-            }
-            var client = _clientService.GetById(saleDto.ClientId);
-            if (client != null)
-            {
+                var client = _clientService.GetById(userId);
                 var sale = new Sale()
                 {
-                    //ClientId = int.Parse(Client.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value),
-                    ClientId = client.Id
+                    ClientId = userId,
+                    Client = client
+                   
                 };
                 return _saleService.Add(sale);
+            }
+            return NotFound();
+        }
+        [HttpGet("{id}")]
+        public ActionResult<Sale> GetById([FromRoute] int id)
+        {
+            var sale= _saleService.GetById(id);
+            if (sale != null)
+            {
+                return Ok(sale);
             }
             return NotFound();
         }

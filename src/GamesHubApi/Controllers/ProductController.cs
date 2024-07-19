@@ -20,7 +20,7 @@ namespace GamesHubApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Product> Get([FromRoute] int id)
+        public ActionResult<Product> GetById([FromRoute] int id)
         {
             var product = _productService.GetById(id);
             if (product != null)
@@ -29,8 +29,8 @@ namespace GamesHubApi.Controllers
             }
             return NotFound();
         }
-        [HttpGet("all")]
-        public ActionResult<Product> Get()
+        [HttpGet("all/products")]
+        public ActionResult<List<Product>> GetAll()
         {
             var products = _productService.Get();
             

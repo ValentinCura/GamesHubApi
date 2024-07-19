@@ -17,8 +17,9 @@ namespace Infraestructure
         public DbSet<Product>? Products { get; set; }
         public DbSet<Review>? Reviews { get; set; }
         public DbSet<Sale>? Sales { get; set; }
-        public DbSet<SaleDetail>? SaleDetail { get; set; }
+        public DbSet<SaleDetail>? SaleDetails { get; set; }
         public DbSet<User>? Users { get; set; }
+        public DbSet<SisAdmin>? SisAdmins { get; set; }
 
         
 
@@ -40,7 +41,7 @@ namespace Infraestructure
                   Username = "sisAdmin",
                   Password = "sisadmin123",
                   Email = "sisadmin@gmail.com",
-                  Rol = "sisAdmin"
+                  Rol = "SisAdmin"
 
               });
 
@@ -68,6 +69,18 @@ namespace Infraestructure
 
                 }
             );
+            modelBuilder.Entity<Product>().HasData(
+                new Product
+                {
+                    Id = 1,
+                    Name = "GTA V",
+                    Description = "Grand Theft Auto V is an action-adventure game played from either a third-person or first-person perspective. Players complete missions—linear scenarios with set objectives—to progress through the story. Outside of the missions, players may freely roam the open world.",
+                    Type = "Action",
+                    Price = 20,
+                    Console = "PC"
+
+                }
+            );
 
             modelBuilder.Entity<User>().HasDiscriminator(u => u.Rol);
 
@@ -75,21 +88,17 @@ namespace Infraestructure
                 .HasOne(op => op.Product)
                 .WithMany()
                 .HasForeignKey(op => op.ProductId);
-            modelBuilder.Entity<SaleDetail>()
-                .HasOne(op => op.Sale)
-                .WithMany(p => p.SaleDetails)
-                .HasForeignKey(op => op.SaleId);
             modelBuilder.Entity<Review>()
                 .HasOne(op => op.Product)
-                .WithMany(p => p.Reviews)
+                .WithMany()
                 .HasForeignKey(op => op.ProductId);
             modelBuilder.Entity<Review>()
                .HasOne(op => op.Client)
-               .WithMany(p => p.Reviews)
+               .WithMany()
                .HasForeignKey(op => op.ClientId);
             modelBuilder.Entity<Sale>()
                 .HasOne(op => op.Client)
-                .WithMany(p => p.Buys)
+                .WithMany()
                 .HasForeignKey(op => op.ClientId);
 
             base.OnModelCreating(modelBuilder);

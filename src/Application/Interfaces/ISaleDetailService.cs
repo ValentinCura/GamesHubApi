@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IClientService
+    public interface ISaleDetailService
     {
-        Client Add(ClientForRequest clientDto);
-        Client? GetById(int id);
-        List<Client> Get();
-        void Remove(int id);
+        SaleDetail Add(SaleDetailForRequest saleDetailDto);
     }
 }
