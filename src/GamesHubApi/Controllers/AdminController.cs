@@ -4,12 +4,14 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GamesHubApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
@@ -19,15 +21,29 @@ namespace GamesHubApi.Controllers
             _adminService = adminService;
         }
 
-        [HttpPost]
+        private bool IsSisAdmin()
+        {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            return userRole == typeof(SisAdmin).Name;
+        }
+
+        [HttpPost("Add")]
         public ActionResult<Admin> Add([FromBody] AdminForRequest admin)
         {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
             return Ok(_adminService.Add(admin));
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Admin> GetById([FromRoute]int id)
+        public ActionResult<Admin> GetById([FromRoute] int id)
         {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
             var admin = _adminService.GetById(id);
             if (admin != null)
             {
@@ -36,15 +52,23 @@ namespace GamesHubApi.Controllers
             return NotFound();
         }
 
-        [HttpGet("all/admins")]
-        public ActionResult<List<Admin>> GetAll() 
-        { 
-            return Ok(_adminService.Get());   
+        [HttpGet("GetAll")]
+        public ActionResult<List<Admin>> GetAll()
+        {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
+            return Ok(_adminService.Get());
         }
 
         [HttpDelete("[Action]/{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
             var admin = _adminService.GetById(id);
 
             if (admin != null)
@@ -53,8 +77,6 @@ namespace GamesHubApi.Controllers
                 return NoContent();
             }
             return NotFound();
-
         }
-
     }
 }

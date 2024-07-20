@@ -5,6 +5,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GamesHubApi.Controllers
 {
@@ -17,15 +18,28 @@ namespace GamesHubApi.Controllers
         {
             _clientService = clientService;
         }
-        [HttpPost]
+        private bool IsSisAdmin()
+        {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            return userRole == typeof(SisAdmin).Name;
+        }
+        [HttpPost("Add")]
         public ActionResult<Client> Add([FromBody] ClientForRequest clientDto)
         {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
             return Ok(_clientService.Add(clientDto));
         }
         [Authorize]
         [HttpGet("{id}")]
         public ActionResult<Client> GetById([FromRoute] int id)
         {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
             var client = _clientService.GetById(id);
             if (client != null)
             {
@@ -35,9 +49,13 @@ namespace GamesHubApi.Controllers
         }
         [Authorize]
 
-        [HttpGet("all/clients")]
+        [HttpGet("GetAll")]
         public ActionResult<List<Client>> GetAll()
         {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
             return Ok(_clientService.Get());
         }
         [Authorize]
@@ -45,6 +63,10 @@ namespace GamesHubApi.Controllers
         [HttpDelete("[Action]/{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
+            if (!IsSisAdmin())
+            {
+                return Forbid();
+            }
             var client = _clientService.GetById(id);
 
             if (client != null)

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240717141316_SisAdmin Creation")]
-    partial class SisAdminCreation
+    [Migration("20240720161003_Fixes")]
+    partial class Fixes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,14 +34,10 @@ namespace Infraestructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -50,6 +46,17 @@ namespace Infraestructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Console = "PC",
+                            Description = "Grand Theft Auto V is an action-adventure game played from either a third-person or first-person perspective. Players complete missions—linear scenarios with set objectives—to progress through the story. Outside of the missions, players may freely roam the open world.",
+                            Name = "GTA V",
+                            Price = 20.0,
+                            Type = "Action"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Review", b =>
@@ -114,7 +121,7 @@ namespace Infraestructure.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("SaleDetail");
+                    b.ToTable("SaleDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -125,6 +132,14 @@ namespace Infraestructure.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
@@ -157,6 +172,8 @@ namespace Infraestructure.Migrations
                         {
                             Id = 2,
                             Email = "JuanPerez@gmail.com",
+                            LastName = "Perez",
+                            Name = "Juan",
                             Password = "juan123",
                             Rol = "Admin",
                             Username = "juanPerez"
@@ -174,6 +191,8 @@ namespace Infraestructure.Migrations
                         {
                             Id = 3,
                             Email = "valencura@gmail.com",
+                            LastName = "Cura",
+                            Name = "Valentin",
                             Password = "valen123",
                             Rol = "Client",
                             Username = "valenCura"
@@ -191,8 +210,10 @@ namespace Infraestructure.Migrations
                         {
                             Id = 1,
                             Email = "sisadmin@gmail.com",
+                            LastName = "Gonzales",
+                            Name = "Raul",
                             Password = "sisadmin123",
-                            Rol = "sisAdmin",
+                            Rol = "SisAdmin",
                             Username = "sisAdmin"
                         });
                 });
@@ -200,13 +221,13 @@ namespace Infraestructure.Migrations
             modelBuilder.Entity("Domain.Entities.Review", b =>
                 {
                     b.HasOne("Domain.Entities.Client", "Client")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Product", "Product")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -219,7 +240,7 @@ namespace Infraestructure.Migrations
             modelBuilder.Entity("Domain.Entities.Sale", b =>
                 {
                     b.HasOne("Domain.Entities.Client", "Client")
-                        .WithMany("Buys")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -236,7 +257,7 @@ namespace Infraestructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Sale", "Sale")
-                        .WithMany("SaleDetails")
+                        .WithMany()
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -244,23 +265,6 @@ namespace Infraestructure.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Sale", b =>
-                {
-                    b.Navigation("SaleDetails");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Client", b =>
-                {
-                    b.Navigation("Buys");
-
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

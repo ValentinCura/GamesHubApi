@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Interfaces;
+using Application.Services;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -15,31 +16,23 @@ namespace GamesHubApi.Controllers
     public class SaleController : ControllerBase
     {
         private readonly ISaleService _saleService;
-        private readonly IClientService _clientService;
-        public SaleController(ISaleService saleService, IClientService clientService)
+        public SaleController(ISaleService saleService)
         {
             _saleService = saleService;
-            _clientService = clientService;
         }
-        [HttpPost]
+        [HttpPost("Add")]
         public ActionResult<Sale> Add()
-
         {
-            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
             
-            if (userId >= 1 || userRole != typeof(Client).Name)
-            {
-                var client = _clientService.GetById(userId);
-                var sale = new Sale()
-                {
-                    ClientId = userId,
-                    Client = client
-                   
-                };
-                return _saleService.Add(sale);
-            }
-            return NotFound();
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != typeof(Client).Name)
+                return Forbid();
+
+            
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            var sale = _saleService.Add( userId );
+
+            return Ok(sale);
         }
         [HttpGet("{id}")]
         public ActionResult<Sale> GetById([FromRoute] int id)

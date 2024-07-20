@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface ISaleService
     {
-        Sale Add(Sale saleToAdd);
+        Sale Add(int clientId);
         Sale GetById(int id);
 
     }

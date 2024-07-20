@@ -22,7 +22,7 @@ namespace GamesHubApi.Controllers
             _productService = productService;
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public ActionResult<Review> Add([FromBody] ReviewForRequest reviewDto)
         {
             if (reviewDto == null || string.IsNullOrEmpty(reviewDto.Content) || reviewDto.ProductId < 1)
@@ -45,7 +45,7 @@ namespace GamesHubApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<Review> GetById([FromRoute] int id)
         {
-            var review = _productService.GetById(id);
+            var review = _reviewService.GetById(id);
             if (review != null)
             {
                 return Ok(review);

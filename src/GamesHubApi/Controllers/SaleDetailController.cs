@@ -20,7 +20,7 @@ namespace GamesHubApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<SaleDetail> Add(SaleDetailForRequest saleDetailDto) 
+        public ActionResult<SaleDetail> Add([FromBody] SaleDetailForRequest saleDetailDto) 
         { 
             if (saleDetailDto != null)
             {
@@ -28,5 +28,6 @@ namespace GamesHubApi.Controllers
             }
             return NotFound();
         }
+        
     }
 }
