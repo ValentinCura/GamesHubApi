@@ -12,5 +12,6 @@ namespace Application.Interfaces
     {
         Review Add(ReviewForRequest reviewDto, int clientId);
         Review GetById(int reviewId);
+        List<Review> GetByProduct(int id);
     }
 }

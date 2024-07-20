@@ -13,12 +13,12 @@ namespace Application.Services
 {
     public class SaleDetailService : ISaleDetailService
     {
-        private readonly ISaleDetailRepository _saleDetailrepository;
+        private readonly ISaleDetailRepository _saleDetailRepository;
         private readonly IProductRepository _productRepository;
         private readonly ISaleRepository _saleRepository;
-        public SaleDetailService(ISaleDetailRepository saleDetailrepository, IProductRepository productRepository, ISaleRepository saleRepository)
+        public SaleDetailService(ISaleDetailRepository saleDetailRepository, IProductRepository productRepository, ISaleRepository saleRepository)
         {
-            _saleDetailrepository = saleDetailrepository;
+            _saleDetailRepository = saleDetailRepository;
             _productRepository = productRepository;
             _saleRepository = saleRepository;
         }
@@ -37,7 +37,15 @@ namespace Application.Services
                 
 
             };
-            return _saleDetailrepository.Add(saleDetail);
+            return _saleDetailRepository.Add(saleDetail);
+        }
+        public List<SaleDetail> GetBySale(int saleId, int clientId)
+        {
+            return _saleDetailRepository.GetBySale(saleId, clientId);
+        }
+        public List<SaleDetail> GetSaleRecords(int clientId)
+        {
+            return _saleDetailRepository.GetSaleRecords(clientId);
         }
     }
 

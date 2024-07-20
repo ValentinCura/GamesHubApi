@@ -15,5 +15,11 @@ namespace Infraestructure.Repositories
         {
             _context = context;
         }
+        public List<Review> GetByProduct(int productId)
+        {
+            return _context.Reviews
+            .Where(r => r.ProductId == productId)
+            .ToList();
+        }
     }
 }

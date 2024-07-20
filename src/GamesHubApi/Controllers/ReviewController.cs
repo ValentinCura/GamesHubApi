@@ -25,7 +25,7 @@ namespace GamesHubApi.Controllers
         [HttpPost("Add")]
         public ActionResult<Review> Add([FromBody] ReviewForRequest reviewDto)
         {
-            if (reviewDto == null || string.IsNullOrEmpty(reviewDto.Content) || reviewDto.ProductId < 1)
+            if (reviewDto.ProductId < 1)
             {
                 return BadRequest();
             }
@@ -42,15 +42,17 @@ namespace GamesHubApi.Controllers
 
             return Ok(review);
         }
-        [HttpGet("{id}")]
-        public ActionResult<Review> GetById([FromRoute] int id)
+        [HttpGet("[Action]/{id}")]
+        public ActionResult<List<Review>> GetByProduct([FromRoute] int id) 
         {
-            var review = _reviewService.GetById(id);
-            if (review != null)
-            {
-                return Ok(review);
-            }
-            return NotFound();
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (userRole != typeof(Client).Name)
+                return Forbid();
+            if (id < 1) return BadRequest();
+            var product = _productService.GetById(id);
+            if (product == null) return NotFound();
+
+            return Ok(_reviewService.GetByProduct(id));
         }
     }
 }

@@ -26,9 +26,9 @@ namespace GamesHubApi.Controllers
         [HttpPost("Add")]
         public ActionResult<Client> Add([FromBody] ClientForRequest clientDto)
         {
-            if (!IsSisAdmin())
+            if (User.Identity.IsAuthenticated)
             {
-                return Forbid();
+                return BadRequest("Cannot register if a client has already loggin.");
             }
             return Ok(_clientService.Add(clientDto));
         }

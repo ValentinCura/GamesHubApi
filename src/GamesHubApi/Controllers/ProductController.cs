@@ -32,6 +32,7 @@ namespace GamesHubApi.Controllers
         [HttpPost("Add")]
         public ActionResult<Product> Add([FromBody] ProductForRequest product)
         {
+            
             if (!IsAdmin())
             {
                 return Forbid();
@@ -40,7 +41,10 @@ namespace GamesHubApi.Controllers
         }
         [HttpGet("{id}")]
         public ActionResult<Product> GetById([FromRoute] int id)
-        {
+        {   if (id < 1)
+            {
+                return BadRequest();
+            }
             var product = _productService.GetById(id);
             if (product != null)
             {
@@ -63,6 +67,7 @@ namespace GamesHubApi.Controllers
         [HttpGet("GetByName")]
         public ActionResult<Product> GetByName([FromQuery] string name)
         {
+            
             var product = _productService.GetByName(name);
             if (product == null)
             {
@@ -88,7 +93,7 @@ namespace GamesHubApi.Controllers
 
         }
         [HttpPut("Update/{id}")]
-        public ActionResult Update([FromRoute] int id, [FromQuery] ProductForRequest productToUpdate)
+        public ActionResult<Product> Update([FromRoute] int id, [FromQuery] ProductForRequest productToUpdate)
         {
             if (!IsAdmin())
             {

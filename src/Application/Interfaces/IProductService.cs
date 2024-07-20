@@ -10,7 +10,7 @@ namespace Application.Services
         Product? GetById(int id);
         List<Product> Get();
         Product Add(ProductForRequest productDto);
-        int Update(int productId, ProductForRequest productDto);
+        Product Update(int productId, ProductForRequest productDto);
         void Remove(int productId);
 
 

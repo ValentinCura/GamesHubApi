@@ -44,5 +44,9 @@ namespace Application.Services
         {
             return _reviewRepository.GetById(reviewId);
         }
+        public List<Review> GetByProduct (int id)
+        {
+            return _reviewRepository.GetByProduct(id);
+        }
     }
 }

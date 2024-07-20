@@ -12,12 +12,17 @@ namespace Domain.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; } 
+        public int Id { get; set; }
+
+        [Required]
         public string Content { get; set; }
 
+        [Required]
         [ForeignKey("ProductId")]
         public int ProductId { get; set; }
         public Product? Product { get; set; }
+
+        [Required]
         [ForeignKey("ClientId")]
         public int ClientId { get; set; }
         public Client? Client{ get; set; }

@@ -13,15 +13,19 @@ namespace Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-       
 
+
+        [Required]
         [ForeignKey("SaleId")] 
         public int SaleId { get; set; }
         public Sale Sale { get; set; }
 
+        [Required]
         [ForeignKey("ProductId")]
         public int ProductId { get; set; }
         public Product Product { get; set; }
+
+        [Required]
         public int Quantity { get; set; }
     }
 }

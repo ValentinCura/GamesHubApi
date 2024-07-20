@@ -11,8 +11,11 @@ namespace Application.Dtos
 {
     public class SaleDetailForRequest
     {
+        [Required]
         public int SaleId { get; set; }
+        [Required]
         public int ProductId { get; set; }
+        [Required]
         public int Quantity { get; set; }
     }
 }

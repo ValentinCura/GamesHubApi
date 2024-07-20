@@ -11,5 +11,7 @@ namespace Application.Interfaces
     public interface ISaleDetailService
     {
         SaleDetail Add(SaleDetailForRequest saleDetailDto);
+        List<SaleDetail> GetBySale(int saleId, int clientId);
+        List<SaleDetail> GetSaleRecords(int clientId);
     }
 }

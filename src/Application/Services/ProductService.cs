@@ -45,7 +45,7 @@ namespace Application.Services
             };
             return _repository.Add(product);
         }
-        public int Update(int productId,  ProductForRequest productDto)
+        public Product Update(int productId,  ProductForRequest productDto)
         {
             
             var product = _repository.GetById(productId);
@@ -56,8 +56,8 @@ namespace Application.Services
                 product.Price = productDto.Price;
                 product.Console = productDto.Console;
                 
-                _repository.Update(product);
-                return productId;
+                
+                return _repository.Update(product); 
             
 
         }

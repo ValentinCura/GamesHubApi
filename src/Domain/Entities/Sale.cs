@@ -15,12 +15,10 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         [ForeignKey("ClientId")]
-
         public int ClientId { get; set; }
         public Client Client { get; set; }
-
-        //public ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
     }
 }
 

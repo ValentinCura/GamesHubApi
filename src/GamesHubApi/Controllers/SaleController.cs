@@ -34,15 +34,6 @@ namespace GamesHubApi.Controllers
 
             return Ok(sale);
         }
-        [HttpGet("{id}")]
-        public ActionResult<Sale> GetById([FromRoute] int id)
-        {
-            var sale= _saleService.GetById(id);
-            if (sale != null)
-            {
-                return Ok(sale);
-            }
-            return NotFound();
-        }
+        
     }
 }
