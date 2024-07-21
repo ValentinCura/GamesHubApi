@@ -14,5 +14,6 @@ namespace Application.Interfaces
         Admin? GetById(int id);
         List<Admin> Get();
         void Remove(int id);
+        int UpdateUsername(int adminId, string username);
     }
 }

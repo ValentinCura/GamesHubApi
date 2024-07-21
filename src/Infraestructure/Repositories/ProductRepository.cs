@@ -19,5 +19,9 @@ namespace Infraestructure.Repositories
         {
             return _context.Products.FirstOrDefault(p => p.Name == name);
         }
+        public List<Product> GetByType(string type) 
+        {
+            return _context.Products.Where(p => p.Type.ToLower() == type.ToLower()).ToList();
+        }
     }
 }

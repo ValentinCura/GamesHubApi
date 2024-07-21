@@ -21,5 +21,9 @@ namespace Infraestructure.Repositories
             .Where(r => r.ProductId == productId)
             .ToList();
         }
+        public bool CheckReview(int clientId, int reviewId)
+        {
+            return _context.Reviews.Any(r => r.ClientId == clientId && r.Id == reviewId);
+        }
     }
 }

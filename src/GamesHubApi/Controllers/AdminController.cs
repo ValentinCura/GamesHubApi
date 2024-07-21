@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Interfaces;
+using Application.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -77,6 +78,20 @@ namespace GamesHubApi.Controllers
                 return NoContent();
             }
             return NotFound();
+        }
+        [HttpPatch("[Action]")]
+        public IActionResult UpdateUsername([FromQuery] string username)
+        {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            if (userRole != typeof(Admin).Name)
+            {
+                return Forbid();
+            }
+            if (username == null) return BadRequest();
+            _adminService.UpdateUsername(userId, username);
+            return NoContent();
+
         }
     }
 }

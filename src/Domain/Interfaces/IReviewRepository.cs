@@ -10,5 +10,6 @@ namespace Domain.Interfaces
     public interface IReviewRepository : IBaseRepository<Review>
     {
         List<Review> GetByProduct(int productId);
+        bool CheckReview(int clientId, int reviewId);
     }
 }

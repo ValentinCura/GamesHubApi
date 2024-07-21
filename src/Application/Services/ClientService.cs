@@ -48,7 +48,13 @@ namespace Application.Services
                 _clientRepository.Remove(client);
             }
         }
+        public int UpdatePassword(int clientId,string password)
+        {
+            var client = _clientRepository.GetById(clientId);
+            client.Password = password;
 
+            return _clientRepository.Update(client).Id;
+        }
 
 
     }

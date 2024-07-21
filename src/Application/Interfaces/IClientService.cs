@@ -14,5 +14,6 @@ namespace Application.Interfaces
         Client? GetById(int id);
         List<Client> Get();
         void Remove(int id);
+        int UpdatePassword(int clientId, string password);
     }
 }

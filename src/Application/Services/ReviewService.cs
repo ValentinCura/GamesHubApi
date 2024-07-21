@@ -48,5 +48,13 @@ namespace Application.Services
         {
             return _reviewRepository.GetByProduct(id);
         }
+        public Review UpdateContent(int  clientId, int reviewId, string content)
+        {
+            var checkReview = _reviewRepository.CheckReview(clientId, reviewId);
+            if (!checkReview) throw new Exception("No review with client");
+            var review = _reviewRepository.GetById(reviewId);
+            review.Content = content;
+            return _reviewRepository.Update(review);
+        }
     }
 }

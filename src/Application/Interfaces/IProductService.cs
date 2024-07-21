@@ -13,7 +13,7 @@ namespace Application.Services
         Product Update(int productId, ProductForRequest productDto);
         void Remove(int productId);
 
-
+        List<Product> GetByType(string type);
 
     }
 }

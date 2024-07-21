@@ -75,6 +75,13 @@ namespace GamesHubApi.Controllers
             }
             return Ok(product);
         }
+        [HttpGet("[Action]")]
+        public ActionResult<List<Product>> GetByType(string type)
+        {
+            if (type == null) return BadRequest();
+
+            return _productService.GetByType(type);
+        }
         [HttpDelete("[Action]/{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
@@ -108,8 +115,7 @@ namespace GamesHubApi.Controllers
             {
                 return NotFound();
             }
-                
         }
-       
+        
     }
 }

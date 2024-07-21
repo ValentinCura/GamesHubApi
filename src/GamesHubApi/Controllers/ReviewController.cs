@@ -54,5 +54,19 @@ namespace GamesHubApi.Controllers
 
             return Ok(_reviewService.GetByProduct(id));
         }
+        [HttpPatch("[Action]/{reviewId}")]
+        public ActionResult<Review> UpdateContent([FromRoute] int reviewId, [FromBody]string content)
+        {
+            if (content == null) return BadRequest();
+            var userRole = User.Claims.FirstOrDefault(c => c.Type != ClaimTypes.Role)?.Value;
+            if (userRole == typeof(Client).Name) return Forbid();
+
+            var review = _reviewService.GetById(reviewId);
+            if (review == null) return NotFound();
+            if (reviewId < 1) return BadRequest();
+
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            return Ok(_reviewService.UpdateContent(userId, reviewId, content));
+        }
     }
 }

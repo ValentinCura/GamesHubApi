@@ -46,5 +46,12 @@ namespace Application.Services
                 _adminRepository.Remove(admin);
             }
         }
+        public int UpdateUsername(int adminId, string username)
+        {
+            var admin = _adminRepository.GetById(adminId);
+            admin.Username = username;
+
+            return _adminRepository.Update(admin).Id;
+        }
     }
 }

@@ -77,5 +77,20 @@ namespace GamesHubApi.Controllers
             return NotFound();
 
         }
+        [Authorize]
+        [HttpPatch("[Action]")]
+        public IActionResult UpdatePassword( [FromQuery] string password)
+        {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
+            if (userRole == typeof(SisAdmin).Name || userRole == typeof(Admin).Name)
+            {
+                return Forbid();
+            }
+            if (password == null) return BadRequest();
+            _clientService.UpdatePassword(userId, password);
+            return NoContent();
+
+        }
     }
 }

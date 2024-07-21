@@ -70,6 +70,9 @@ namespace Application.Services
             }
             
         }
-
+        public List<Product> GetByType(string type)
+        {
+            return _repository.GetByType(type);
+        }
     }
 }
