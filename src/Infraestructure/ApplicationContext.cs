@@ -54,6 +54,7 @@ namespace Infraestructure
                 Password = "juan123",
                 Email = "JuanPerez@gmail.com",
                 Rol = "Admin"
+
             });
            
            modelBuilder.Entity<Client>().HasData(
@@ -69,6 +70,45 @@ namespace Infraestructure
 
                 }
             );
+            modelBuilder.Entity<Client>().HasData(
+               new Client
+               {
+                   Id = 4,
+                   Name = "Mauro",
+                   LastName = "Brizio",
+                   Username = "mauroBrizio",
+                   Password = "mauro123",
+                   Email = "maurobrizio@gmail.com",
+                   Rol = "Client"
+
+               }
+           );
+           modelBuilder.Entity<Client>().HasData(
+               new Client
+               {
+                   Id = 5,
+                   Name = "Matias",
+                   LastName = "Danunzio",
+                   Username = "matiasDanunzio",
+                   Password = "matias123",
+                   Email = "matiasdanunzio@gmail.com",
+                   Rol = "Client"
+
+               }
+           );
+           modelBuilder.Entity<Client>().HasData(
+               new Client
+               {
+                   Id = 6,
+                   Name = "Mateo",
+                   LastName = "Caranta",
+                   Username = "mateoCaranta",
+                   Password = "mateo123",
+                   Email = "mateocaranta@gmail.com",
+                   Rol = "Client"
+
+               }
+           );
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
@@ -78,6 +118,30 @@ namespace Infraestructure
                     Type = "Action",
                     Price = 20,
                     Console = "PC"
+
+                }
+            );
+            modelBuilder.Entity<Product>().HasData(
+                new Product
+                {
+                    Id = 2,
+                    Name = "EA FC 24",
+                    Description = "The most true-to-football experience ever, with HyperMotionV, PlayStyles optimized by Opta, and a revolutionized Frostbite™ Engine that reinvents how over 19,000 authentic players move, play, and look in every match.",
+                    Type = "Sport",
+                    Price = 30,
+                    Console = "PS5"
+
+                }
+            );
+            modelBuilder.Entity<Product>().HasData(
+                new Product
+                {
+                    Id = 3,
+                    Name = "MORTAL KOMBAT",
+                    Description = "Popular fighting video game franchise known for its brutal combat, iconic characters, and distinctive fatalities. Created by Ed Boon and John Tobias, it was first released by Midway Games in 1992. The game features a diverse roster of fighters, each with unique abilities and special moves. Players compete in one-on-one battles in a tournament setting, with the ultimate goal of defeating the final boss and becoming the champion.",
+                    Type = "FIGHT",
+                    Price = 30,
+                    Console = "PS5"
 
                 }
             );

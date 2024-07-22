@@ -7,7 +7,7 @@
 namespace Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Fixes : Migration
+    public partial class LastMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace Infraestructure.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<double>(type: "REAL", nullable: false),
@@ -37,9 +37,9 @@ namespace Infraestructure.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Username = table.Column<string>(type: "TEXT", nullable: true),
-                    Password = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
                     Rol = table.Column<string>(type: "TEXT", maxLength: 8, nullable: false)
                 },
                 constraints: table =>
@@ -123,7 +123,12 @@ namespace Infraestructure.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "Console", "Description", "Name", "Price", "Type" },
-                values: new object[] { 1, "PC", "Grand Theft Auto V is an action-adventure game played from either a third-person or first-person perspective. Players complete missions—linear scenarios with set objectives—to progress through the story. Outside of the missions, players may freely roam the open world.", "GTA V", 20.0, "Action" });
+                values: new object[,]
+                {
+                    { 1, "PC", "Grand Theft Auto V is an action-adventure game played from either a third-person or first-person perspective. Players complete missions—linear scenarios with set objectives—to progress through the story. Outside of the missions, players may freely roam the open world.", "GTA V", 20.0, "Action" },
+                    { 2, "PS5", "The most true-to-football experience ever, with HyperMotionV, PlayStyles optimized by Opta, and a revolutionized Frostbite™ Engine that reinvents how over 19,000 authentic players move, play, and look in every match.", "EA FC 24", 30.0, "Sport" },
+                    { 3, "PS5", "popular fighting video game franchise known for its brutal combat, iconic characters, and distinctive fatalities. Created by Ed Boon and John Tobias, it was first released by Midway Games in 1992. The game features a diverse roster of fighters, each with unique abilities and special moves. Players compete in one-on-one battles in a tournament setting, with the ultimate goal of defeating the final boss and becoming the champion.", "MORTAL KOMBAT", 30.0, "FIGHT" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -132,7 +137,10 @@ namespace Infraestructure.Migrations
                 {
                     { 1, "sisadmin@gmail.com", "Gonzales", "Raul", "sisadmin123", "SisAdmin", "sisAdmin" },
                     { 2, "JuanPerez@gmail.com", "Perez", "Juan", "juan123", "Admin", "juanPerez" },
-                    { 3, "valencura@gmail.com", "Cura", "Valentin", "valen123", "Client", "valenCura" }
+                    { 3, "valencura@gmail.com", "Cura", "Valentin", "valen123", "Client", "valenCura" },
+                    { 4, "maurobrizio@gmail.com", "Brizio", "Mauro", "mauro123", "Client", "mauroBrizio" },
+                    { 5, "matiasdanunzio@gmail.com", "Danunzio", "Matias", "matias123", "Client", "matiasDanunzio" },
+                    { 6, "mateocaranta@gmail.com", "Caranta", "Mateo", "mateo123", "Client", "mateoCaranta" }
                 });
 
             migrationBuilder.CreateIndex(

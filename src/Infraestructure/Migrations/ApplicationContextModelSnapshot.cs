@@ -31,6 +31,7 @@ namespace Infraestructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
@@ -53,6 +54,24 @@ namespace Infraestructure.Migrations
                             Name = "GTA V",
                             Price = 20.0,
                             Type = "Action"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Console = "PS5",
+                            Description = "The most true-to-football experience ever, with HyperMotionV, PlayStyles optimized by Opta, and a revolutionized Frostbite™ Engine that reinvents how over 19,000 authentic players move, play, and look in every match.",
+                            Name = "EA FC 24",
+                            Price = 30.0,
+                            Type = "Sport"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Console = "PS5",
+                            Description = "popular fighting video game franchise known for its brutal combat, iconic characters, and distinctive fatalities. Created by Ed Boon and John Tobias, it was first released by Midway Games in 1992. The game features a diverse roster of fighters, each with unique abilities and special moves. Players compete in one-on-one battles in a tournament setting, with the ultimate goal of defeating the final boss and becoming the champion.",
+                            Name = "MORTAL KOMBAT",
+                            Price = 30.0,
+                            Type = "FIGHT"
                         });
                 });
 
@@ -128,6 +147,7 @@ namespace Infraestructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
@@ -139,6 +159,7 @@ namespace Infraestructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Rol")
@@ -147,6 +168,7 @@ namespace Infraestructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -193,6 +215,36 @@ namespace Infraestructure.Migrations
                             Password = "valen123",
                             Rol = "Client",
                             Username = "valenCura"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "maurobrizio@gmail.com",
+                            LastName = "Brizio",
+                            Name = "Mauro",
+                            Password = "mauro123",
+                            Rol = "Client",
+                            Username = "mauroBrizio"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "matiasdanunzio@gmail.com",
+                            LastName = "Danunzio",
+                            Name = "Matias",
+                            Password = "matias123",
+                            Rol = "Client",
+                            Username = "matiasDanunzio"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "mateocaranta@gmail.com",
+                            LastName = "Caranta",
+                            Name = "Mateo",
+                            Password = "mateo123",
+                            Rol = "Client",
+                            Username = "mateoCaranta"
                         });
                 });
 
