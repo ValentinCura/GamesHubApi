@@ -29,6 +29,7 @@ namespace GamesHubApi.Controllers
         public ActionResult<SaleDetail> Add([FromBody] SaleDetailForRequest saleDetailDto) 
         {
             var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "");
             if (userRole == typeof(SisAdmin).Name || userRole == typeof(Admin).Name)
             {
                 return Forbid();
@@ -38,7 +39,7 @@ namespace GamesHubApi.Controllers
             if (_saleService.GetById(saleDetailDto.SaleId) == null) return NotFound();
             if (_productService.GetById(saleDetailDto.ProductId) == null) return NotFound();
 
-            return Ok(_saleDetailService.Add(saleDetailDto));
+            return Ok(_saleDetailService.Add(userId, saleDetailDto));
         }
         [HttpGet("[Action]/{saleId}")]
         public ActionResult<List<SaleDetail>> GetBySale([FromRoute] int saleId)

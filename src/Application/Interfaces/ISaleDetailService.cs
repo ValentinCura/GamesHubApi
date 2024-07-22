@@ -10,7 +10,7 @@ namespace Application.Interfaces
 {
     public interface ISaleDetailService
     {
-        SaleDetail Add(SaleDetailForRequest saleDetailDto);
+        SaleDetail Add(int clientId, SaleDetailForRequest saleDetailDto);
         List<SaleDetail> GetBySale(int saleId, int clientId);
         List<SaleDetail> GetSaleRecords(int clientId);
     }

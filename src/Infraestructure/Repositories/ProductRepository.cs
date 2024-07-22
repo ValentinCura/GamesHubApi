@@ -17,7 +17,7 @@ namespace Infraestructure.Repositories
         }
         public Product? GetByName (string name)
         {
-            return _context.Products.FirstOrDefault(p => p.Name == name);
+            return _context.Products.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
         }
         public List<Product> GetByType(string type) 
         {
