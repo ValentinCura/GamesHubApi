@@ -25,8 +25,6 @@ namespace Application.Services
 
         public SaleDetail Add(int clientId, SaleDetailForRequest saleDetailDto)
         {
-            var validSale = _saleDetailRepository.CheckSale(clientId, saleDetailDto.ProductId);
-            if (validSale == null) throw new Exception("Can´t add SaleDetail if you dont have a sale, or isn´t yours");
             var product = _productRepository.GetById(saleDetailDto.ProductId);
             var sale = _saleRepository.GetById(saleDetailDto.SaleId);
             var saleDetail = new SaleDetail()
